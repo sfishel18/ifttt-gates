@@ -1,0 +1,27 @@
+{
+  "name": "ifttt-gates",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "touch .env && source .env && AUTH_KEY=$AUTH_KEY functions-framework --source ./index.js --target index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sfishel18/ifttt-gates.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sfishel18/ifttt-gates/issues"
+  },
+  "homepage": "https://github.com/sfishel18/ifttt-gates#readme",
+  "dependencies": {
+    "@google-cloud/firestore": "^3.4.0",
+    "axios": "^0.19.1"
+  },
+  "devDependencies": {
+    "@google-cloud/functions-framework": "^1.3.2"
+  }
+}

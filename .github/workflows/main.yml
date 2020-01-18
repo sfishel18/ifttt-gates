@@ -3,15 +3,24 @@ name: CI
 on: [push]
 
 jobs:
-  build:
-
+  Deploy:
     runs-on: ubuntu-latest
+    container: google/cloud-sdk:alpine
+    # needs: Test
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+      - uses: actions/checkout@v1
+
+      - name: Init Gcloud CLI
+        env:
+          GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
+        run: |
+          echo ${GCLOUD_SERVICE_KEY} > ./keyfile.json
+          gcloud auth activate-service-account --key-file ./keyfile.json
+
+      - name: Deploy Cloud Functions
+        env:
+          AUTH_KEY: ${{ secrets.AUTH_KEY }}
+        run: |
+          gcloud functions deploy trigger --project ifttt-gates --runtime nodejs10 --entry-point trigger --trigger-http --allow-unauthenticated --set-env-vars AUTH_KEY=$AUTH_KEY
+          gcloud functions deploy update --project ifttt-gates --runtime nodejs10 --entry-point update --trigger-http --allow-unauthenticated --set-env-vars AUTH_KEY=$AUTH_KEY
