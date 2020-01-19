@@ -4,6 +4,11 @@ const axios = require('axios');
 const stringify = input =>
   typeof input === "string" ? input : JSON.stringify(input);
 
+const db = new Firestore({
+  projectId: 'ifttt-gates',
+  keyFilename: './keyfile.json',
+});
+
 exports.trigger = (req, res) => {
   if (req.method === "HEAD") {
     res.status(200).send();
@@ -18,11 +23,6 @@ exports.trigger = (req, res) => {
     res.status(400).send('Required argument "webhook" is missing or empty');
     return;
   }
-
-  const db = new Firestore({
-    projectId: 'ifttt-gates',
-    keyFilename: './keyfile.json',
-  });
 
   db.doc(`gates/${encodeURIComponent(webhook)}`).get()
     .then(snapshot => {
@@ -56,11 +56,6 @@ exports.update = (req, res) => {
     res.status(400).send('Required argument "active" is missing or invalid, it must "true" or "false"');
     return;
   }
-
-  const db = new Firestore({
-    projectId: 'ifttt-gates',
-    keyFilename: './keyfile.json',
-  });
 
   db.doc(`gates/${encodeURIComponent(webhook)}`).set({
       active: (active === true || active === 'true')

@@ -3,10 +3,29 @@ name: CI
 on: [push]
 
 jobs:
+  Test:
+    runs-on: ubuntu-latest
+    container: google/cloud-sdk
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Install Libraries and Dependencies
+        run: |
+          curl -sL https://deb.nodesource.com/setup_10.x | bash -
+          apt-get install -y google-cloud-sdk-firestore-emulator nodejs
+          npm install
+
+      - name: Run tests
+        env:
+          AUTH_KEY: ${{ secrets.AUTH_KEY }}
+        run: ./node_modules/.bin/concurrently -k --success first "npm run start" "npm run test"
+
+
   Deploy:
     runs-on: ubuntu-latest
     container: google/cloud-sdk:alpine
-    # needs: Test
+    needs: Test
 
     steps:
       - uses: actions/checkout@v1
