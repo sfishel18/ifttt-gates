@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm run start:functions\" \"npm run start:firestore\"",
-    "start:functions": "touch .env && . .env && AUTH_KEY=$AUTH_KEY FIRESTORE_EMULATOR_HOST=localhost:8081 functions-framework --source ./index.js --target index",
+    "start:functions": "touch .env && . ./.env && AUTH_KEY=$AUTH_KEY FIRESTORE_EMULATOR_HOST=localhost:8081 functions-framework --source ./index.js --target index",
     "start:firestore": "gcloud --quiet beta emulators firestore start --host-port=localhost:8081",
-    "test": "touch .env && . .env && AUTH_KEY=$AUTH_KEY jest"
+    "test": "touch .env && . ./.env && AUTH_KEY=$AUTH_KEY jest"
   },
   "repository": {
     "type": "git",
