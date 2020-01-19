@@ -19,7 +19,7 @@ jobs:
       - name: Run tests
         env:
           AUTH_KEY: ${{ secrets.AUTH_KEY }}
-        run: ./node_modules/.bin/concurrently -k --success first "npm run start:functions" "npm run start:firestore" "npm run test"
+        run: ./node_modules/.bin/concurrently -k --success first "npm run start:functions || true" "npm run start:firestore || true" "npm run test"
 
 
   Deploy:
