@@ -21,7 +21,7 @@
   "homepage": "https://github.com/sfishel18/ifttt-gates#readme",
   "dependencies": {
     "@google-cloud/firestore": "^3.4.0",
-    "axios": "^0.19.1"
+    "axios": "^0.21.1"
   },
   "devDependencies": {
     "@google-cloud/functions-framework": "^1.3.2",
